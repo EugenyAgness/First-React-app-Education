@@ -1,0 +1,22 @@
+.loader {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 3px dashed teal;
+    animation: loadAnim 2s infinite linear;
+}
+
+@keyframes loadAnim {
+    
+    from {
+        scale: 1;
+        transform: rotate(0deg);
+        }
+        
+        to {
+            scale: 1.5;
+            transform: rotate(360deg);
+
+    }
+
+}
