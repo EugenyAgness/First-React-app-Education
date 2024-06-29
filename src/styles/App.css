@@ -23,7 +23,7 @@
     align-items: center;
     min-width: 400px;
 }
-/* 
+
 .posts-enter {
     transform: translateX(-350px);
 }
@@ -40,4 +40,4 @@
 .posts-exit-active {
     transform: translateX(-350px);
     transition: all 500ms ease-in;
-} */
+}
