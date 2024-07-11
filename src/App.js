@@ -17,18 +17,30 @@ import axios from 'axios';
 import PostService from "./API/PostService";
 import LoadingPosts from "./components/UI/loading/LoadingPosts";
 import { useFetching } from "./hooks/useFetching";
+import { calcPagesCount } from "./utils/calcPagesCount";
+import Pagination from "./components/UI/padination/Pagination";
 
 function App() {
     
     const [fetchPosts, loader, error] = useFetching(async () => {
-        const posts = await PostService.getAll();
-        setPosts(posts);
+        const response = await PostService.getAll(limit, page);
+        setPosts(response.data);
+        setTotalPages(response.headers['x-total-count'])
     })
 
+    const [page, setPage] = useState(1);
+    const [limit, setPostsLimit] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
+
+    const pagesCount = calcPagesCount(limit, totalPages);
+
+    const changePage = (page) => {
+        setPage(page);
+    }
 
     useEffect(() => {
         fetchPosts()
-    }, [])
+    }, [page])
 
     const [posts, setPosts] = useState([])
     const [valuePost, setValuePost] = useState({ title: '', body: '' });
@@ -80,6 +92,12 @@ function App() {
                     : <PostList remove={removePost} posts={sortedAndSearchingPosts} title='posts'></PostList>   
                 }
             </form>
+
+            <Pagination
+                changePage = {changePage}
+                pagesCount = {pagesCount}
+                page       = {page}
+            />
         </div>
     );
 }
